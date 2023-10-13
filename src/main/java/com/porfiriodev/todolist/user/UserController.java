@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import static com.porfiriodev.todolist.exception.ResponseUtils.defaultResponse;
 
 @RestController
 @RequestMapping("/users")
@@ -24,10 +23,8 @@ public class UserController {
 
         if(user != null) {
             System.out.println("Usuário já existe!");
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "O usuário já existe");
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return defaultResponse(HttpStatus.BAD_REQUEST, "O usuário já existe!");
         }
 
         var passwordHashed = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
